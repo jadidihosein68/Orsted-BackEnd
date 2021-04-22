@@ -16,22 +16,30 @@ namespace Services
     {
         public IEnumerable<Employee> DecerializeInMemoryExcelToClass(Stream stream, bool hasHeadere)
         {
+
             List<Employee> users = new List<Employee>();
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            using (var reader = ExcelReaderFactory.CreateReader(stream))
+            try
             {
-                while (reader.Read())
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    users.Add(new Employee
+                    while (reader.Read())
                     {
-                        EmployeeNumber = reader.GetValue(0).ToString(),
-                        EmployeeStatus = reader.GetValue(1).ToString(),
-                        FirstName = reader.GetValue(2).ToString(),
-                        LastName = reader.GetValue(3).ToString()
-                    });
+                        users.Add(new Employee
+                        {
+                            EmployeeNumber = reader.GetValue(0).ToString(),
+                            FirstName = reader.GetValue(1).ToString(),
+                            LastName = reader.GetValue(2).ToString(),
+                            EmployeeStatus = reader.GetValue(3).ToString()
+                        });
+                    }
                 }
+                return hasHeadere ? users.Skip(1) : users;
             }
-            return hasHeadere ? users.Skip(1) : users;
+            catch
+            {
+                throw new InvalidDataException("Invalid excel file stream");
+            }
         }
     }
 }

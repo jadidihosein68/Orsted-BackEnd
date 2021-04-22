@@ -6,6 +6,19 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  
+  <ItemGroup>
+    <None Remove="MockData\Orsted.xlsx" />
+  </ItemGroup>
+    
+    <ItemGroup>
+    <Content Include="MockData\Orsted.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  
+    
+    
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -21,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
 </Project>
