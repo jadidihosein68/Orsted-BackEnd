@@ -29,7 +29,7 @@ namespace API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
             services.AddCors(options => options.AddPolicy("CorsPolicy",
-                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+                            builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             RegisterServices(services);
         }
 
@@ -45,6 +45,8 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
